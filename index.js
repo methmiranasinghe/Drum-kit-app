@@ -2,42 +2,68 @@ var numberOfDrumButtons = document.querySelectorAll(".drum").length;
 
 for (var i = 0; i < numberOfDrumButtons; i++) {
   document.querySelectorAll(".drum")[i].addEventListener("click", function () {
-    
-   this.style.color="white";
+    var buttonInnerHTML = this.innerHTML;
+
+    makeSound(buttonInnerHTML);
+
+    buttonAnimation(buttonInnerHTML);
   });
 }
 
-// list.onclick = function(e) {
-//   e.preventDefault();
+document.addEventListener("keypress", function (event) {
+  makeSound(event.key);
 
-//   var elm = e.target;
-//   var audio = document.getElementById('audio');
+  buttonAnimation(event.key);
+});
 
-//   var source = document.getElementById('audioSource');
-//   source.src = elm.getAttribute('sounds/tom-1.mp3');
+function makeSound(key) {
+  switch (key) {
+    case "w":
+      var tom1 = new Audio("sounds/tom-1.mp3");
+      tom1.play();
+      break;
 
-//   audio.load(); //call this to just preload the audio without playing
-//   audio.play(); //call this to play the song right away
-// };
+    case "a":
+      var tom2 = new Audio("sounds/tom-2.mp3");
+      tom2.play();
+      break;
 
-// const playSequence = (sounds) => {
-//     const playNextSound = () => {
-//       audio.src = sounds[currentSoundIndex++];
-//       audio.currentTime = 0;
-//       audio.play();
-//     };
+    case "s":
+      var tom3 = new Audio("sounds/tom-3.mp3");
+      tom3.play();
+      break;
 
-//     let currentSoundIndex = 0;
-//     if (document.querySelectorAll(".drum").length) {
-//       const audio = new Audio();
-//       playNextSound();
+    case "d":
+      var tom4 = new Audio("sounds/tom-4.mp3");
+      tom4.play();
+      break;
 
-//       audio.addEventListener('ended', () => {
-//         if (currentSoundIndex < document.querySelectorAll(".drum").length) {
-//           playNextSound();
-//         }
-//       });
-//     }
-//   }
+    case "j":
+      var snare = new Audio("sounds/snare.mp3");
+      snare.play();
+      break;
 
-//   playSequence(['sounds/crash.mp3', 'sounds/kick-bass.mp3', 'snare.mp3','tom-1.mp3','tom-2.mp3,tom-3.mp3']);
+    case "k":
+      var crash = new Audio("sounds/crash.mp3");
+      crash.play();
+      break;
+
+    case "l":
+      var kick = new Audio("sounds/kick-bass.mp3");
+      kick.play();
+      break;
+
+    default:
+      console.log(key);
+  }
+}
+
+function buttonAnimation(currentKey) {
+  var activeButton = document.querySelector("." + currentKey);
+
+  activeButton.classList.add("pressed");
+
+  setTimeout(function () {
+    activeButton.classList.remove("pressed");
+  }, 100);
+}
